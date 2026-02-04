@@ -12,6 +12,9 @@
 		BT003 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT103; };
 		BT004 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT104; };
 		BT005 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT105; };
+		BT006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BT106; };
+		BT007 /* DailyCupLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT107; };
+		BT008 /* CoffeeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT108; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +24,9 @@
 		BT103 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		BT104 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		BT105 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
+		BT106 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BT107 /* DailyCupLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCupLog.swift; sourceTree = "<group>"; };
+		BT108 /* CoffeeRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeRules.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +51,7 @@
 		BT301 /* BrewTime */ = {
 			isa = PBXGroup;
 			children = (
+				BT106 /* Assets.xcassets */,
 				BT101 /* BrewTimeApp.swift */,
 				BT303 /* Theme */,
 				BT304 /* Models */,
@@ -72,6 +79,8 @@
 			isa = PBXGroup;
 			children = (
 				BT103 /* Models.swift */,
+				BT107 /* DailyCupLog.swift */,
+				BT108 /* CoffeeRules.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,6 +152,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BT006 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +166,8 @@
 				BT001 /* BrewTimeApp.swift in Sources */,
 				BT002 /* Theme.swift in Sources */,
 				BT003 /* Models.swift in Sources */,
+				BT007 /* DailyCupLog.swift in Sources */,
+				BT008 /* CoffeeRules.swift in Sources */,
 				BT004 /* HomeView.swift in Sources */,
 				BT005 /* RecipeDetailView.swift in Sources */,
 			);
