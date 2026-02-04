@@ -1,0 +1,27 @@
+name: BrewTime
+options:
+  bundleIdPrefix: com.brewtime
+  deploymentTarget:
+    iOS: "18.0"
+  xcodeVersion: "15.0"
+targets:
+  BrewTime:
+    type: application
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: .
+        name: BrewTime
+        excludes:
+          - "spec.md"
+          - "project.yml"
+          - "*.xcodeproj"
+          - ".git"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.brewtime.BrewTime
+        TARGETED_DEVICE_FAMILY: "1,2"
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        SWIFT_EMIT_LOCALIZATION_STRINGS: NO
+        IPHONEOS_DEPLOYMENT_TARGET: 18.0
