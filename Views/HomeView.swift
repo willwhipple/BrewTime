@@ -14,31 +14,37 @@ struct HomeView: View {
     @State private var isAnimatingCounter = false
     @State private var cautionMessage: String?
     @State private var showCautionAlert = false
-
     private var todayTimestamps: [Date] {
         DailyCupLog.todayTimestamps(from: rawTimestamps)
     }
 
     private var dailyCount: Int { todayTimestamps.count }
-    private var backgroundColor: Color { Theme.background(for: colorScheme) }
     private var primaryText: Color { Theme.primaryText(for: colorScheme) }
+
+    private static let coffeeQuote = "Coffee is a language in itself. — Jackie Chan"
 
     var body: some View {
         ZStack {
-            backgroundColor
-                .ignoresSafeArea()
+            AnimatedMeshBackground()
 
-            VStack(spacing: 32) {
+            VStack(spacing: 0) {
                 // Header
                 Text("BrewTime")
-                    .themeLargeTitle()
+                    .font(.largeTitle)
+                    .fontDesign(.rounded)
+                    .fontWeight(.semibold)
                     .foregroundStyle(primaryText)
-                    .padding(.top, 20)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 24)
 
-                // Coworking Counter
+                // 32pt vertical space between counter and recipe list
+                Spacer()
+                    .frame(height: 32)
+
+                // Coworking Counter (no glass container)
                 VStack(spacing: 16) {
                     Text("\(dailyCount)")
-                        .font(.system(size: 72, weight: .light))
+                        .font(.system(size: 72, weight: .medium))
                         .fontDesign(.rounded)
                         .foregroundStyle(primaryText)
                         .contentTransition(.numericText())
@@ -47,19 +53,20 @@ struct HomeView: View {
                         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isAnimatingCounter)
 
                     Text("cups today")
-                        .font(.system(.subheadline, design: .rounded))
-                        .foregroundStyle(Theme.secondaryText(for: colorScheme))
+                        .font(.headline)
+                        .fontDesign(.rounded)
+                        .foregroundStyle(.secondary)
 
-                    // Optional daily summary
                     if let summary = CoffeeRules.dailySummary(cupTimestamps: todayTimestamps), !todayTimestamps.isEmpty {
                         Text(summary)
-                            .font(.system(.caption, design: .rounded))
-                            .foregroundStyle(Theme.secondaryText(for: colorScheme))
+                            .font(.body)
+                            .fontDesign(.rounded)
+                            .foregroundStyle(.secondary)
+                            .lineSpacing(8)
                             .multilineTextAlignment(.center)
                     }
 
                     HStack(spacing: 24) {
-                        // Minus button (smaller) – filled circle, contrasting icon
                         Button {
                             if dailyCount > 0 {
                                 let sorted = todayTimestamps.sorted(by: <)
@@ -75,19 +82,13 @@ struct HomeView: View {
                         } label: {
                             Image(systemName: "minus")
                                 .font(.system(size: 20, weight: .semibold))
-                                .foregroundStyle(Theme.primaryText(for: colorScheme))
                                 .frame(width: 44, height: 44)
-                                .background(Theme.accent1(for: colorScheme))
-                                .clipShape(Circle())
                         }
                         .buttonStyle(.plain)
                         .disabled(dailyCount == 0)
                         .opacity(dailyCount == 0 ? 0.5 : 1)
 
-                        // Plus button (prominent) – filled circle, contrasting icon
                         Button {
-                            let generator = UINotificationFeedbackGenerator()
-                            generator.notificationOccurred(.success)
                             let now = Date()
                             var list = todayTimestamps
                             list.append(now)
@@ -105,29 +106,26 @@ struct HomeView: View {
                         } label: {
                             Image(systemName: "plus")
                                 .font(.system(size: 28, weight: .semibold))
-                                .foregroundStyle(Theme.primaryText(for: colorScheme))
                                 .frame(width: 64, height: 64)
-                                .background(Theme.accent2(for: colorScheme))
-                                .clipShape(Circle())
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.borderedProminent)
+                        .tint(Theme.accent2(for: colorScheme))
+                        .buttonBorderShape(.roundedRectangle(radius: 16))
                     }
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, 16)
 
-                // Recipe cards (2-column grid – all four visible)
-                VStack(alignment: .leading, spacing: 12) {
+                // Recipe cards (2-column grid – button-like tiles)
+                VStack(alignment: .leading, spacing: 16) {
                     Text("The Espresso Bar")
-                        .font(.system(.title2, design: .rounded))
+                        .font(.headline)
+                        .fontDesign(.rounded)
                         .fontWeight(.semibold)
                         .foregroundStyle(primaryText)
-                        .padding(.horizontal, 4)
 
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                         ForEach(Recipe.allRecipes) { recipe in
                             RecipeCardView(recipe: recipe) {
-                                let generator = UISelectionFeedbackGenerator()
-                                generator.selectionChanged()
                                 withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
                                     selectedRecipe = recipe
                                 }
@@ -135,12 +133,23 @@ struct HomeView: View {
                             .environment(\.colorScheme, colorScheme)
                         }
                     }
-                    .padding(.horizontal, 20)
                 }
+
+                // Coffee quote at bottom
+                Text(Self.coffeeQuote)
+                    .font(.footnote)
+                    .fontDesign(.rounded)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 32)
+                    .padding(.bottom, 16)
 
                 Spacer(minLength: 0)
             }
+            .padding(.horizontal, 24)
         }
+        .sensoryFeedback(.selection, trigger: dailyCount)
+        .sensoryFeedback(.selection, trigger: selectedRecipe?.id)
         .sheet(item: $selectedRecipe) { recipe in
             RecipeDetailView(recipe: recipe)
                 .presentationDetents([.medium, .large])
@@ -169,16 +178,25 @@ struct RecipeCardView: View {
         Button(action: onTap) {
             VStack(alignment: .leading, spacing: 8) {
                 Text(recipe.name)
-                    .font(.system(.title3, design: .rounded))
+                    .font(.headline)
+                    .fontDesign(.rounded)
                     .fontWeight(.semibold)
                     .foregroundStyle(Theme.primaryText(for: colorScheme))
                 Text(recipe.ratioDescription)
-                    .font(.system(.caption, design: .rounded))
-                    .foregroundStyle(Theme.secondaryText(for: colorScheme))
+                    .font(.body)
+                    .fontDesign(.rounded)
+                    .foregroundStyle(.secondary)
+                    .lineSpacing(8)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(20)
-            .themeCard()
+            .padding(24)
+            .background(Theme.cardBackground(for: colorScheme))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .strokeBorder(Theme.secondaryText(for: colorScheme).opacity(0.3), lineWidth: 1)
+            )
+            .shadow(color: .black.opacity(colorScheme == .dark ? 0.3 : 0.08), radius: 8, x: 0, y: 2)
             .scaleEffect(isPressed ? 0.97 : 1.0)
         }
         .buttonStyle(.plain)
