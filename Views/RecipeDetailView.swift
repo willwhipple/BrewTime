@@ -11,8 +11,8 @@ struct RecipeDetailView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
     let recipe: Recipe
+    @State private var dismissTrigger = false
 
-    private var backgroundColor: Color { Theme.background(for: colorScheme) }
     private var primaryText: Color { Theme.primaryText(for: colorScheme) }
     private var secondaryText: Color { Theme.secondaryText(for: colorScheme) }
     private var accent1: Color { Theme.accent1(for: colorScheme) }
@@ -20,14 +20,13 @@ struct RecipeDetailView: View {
 
     var body: some View {
         ZStack {
-            backgroundColor
-                .ignoresSafeArea()
+            AnimatedMeshBackground()
 
-            VStack(alignment: .leading, spacing: 24) {
-                // Dismiss bar (optional Material)
+            VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     Spacer()
                     Button {
+                        dismissTrigger.toggle()
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
                             dismiss()
                         }
@@ -39,25 +38,28 @@ struct RecipeDetailView: View {
                     }
                     .buttonStyle(.plain)
                 }
-                .padding(.horizontal, 20)
-                .padding(.top, 8)
+                .padding(.top, 24)
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 24) {
                         Text(recipe.name)
-                            .themeLargeTitle()
+                            .font(.largeTitle)
+                            .fontDesign(.rounded)
+                            .fontWeight(.semibold)
                             .foregroundStyle(primaryText)
 
                         Text(recipe.description)
-                            .font(.system(.body, design: .rounded))
-                            .foregroundStyle(secondaryText)
+                            .font(.body)
+                            .fontDesign(.rounded)
+                            .foregroundStyle(.secondary)
+                            .lineSpacing(8)
 
-                        // Ratio bar
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Ratio \(recipe.ratioDescription)")
-                                .font(.system(.subheadline, design: .rounded))
+                                .font(.headline)
+                                .fontDesign(.rounded)
                                 .fontWeight(.medium)
-                                .foregroundStyle(secondaryText)
+                                .foregroundStyle(.secondary)
 
                             RatioBarView(
                                 components: recipe.ratioComponents,
@@ -65,35 +67,40 @@ struct RecipeDetailView: View {
                                 accent2: accent2
                             )
                             .frame(height: 32)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
 
-                        // Instructions
-                        VStack(alignment: .leading, spacing: 8) {
+                        VStack(alignment: .leading, spacing: 12) {
                             Text("How to make")
-                                .font(.system(.subheadline, design: .rounded))
+                                .font(.headline)
+                                .fontDesign(.rounded)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(primaryText)
 
                             ForEach(Array(recipe.instructions.enumerated()), id: \.offset) { index, step in
-                                HStack(alignment: .top, spacing: 10) {
+                                HStack(alignment: .top, spacing: 12) {
                                     Text("\(index + 1).")
-                                        .font(.system(.body, design: .rounded))
+                                        .font(.body)
+                                        .fontDesign(.rounded)
                                         .fontWeight(.medium)
                                         .foregroundStyle(accent1)
-                                        .frame(width: 20, alignment: .leading)
+                                        .frame(width: 24, alignment: .leading)
                                     Text(step)
-                                        .font(.system(.body, design: .rounded))
-                                        .foregroundStyle(secondaryText)
+                                        .font(.body)
+                                        .fontDesign(.rounded)
+                                        .foregroundStyle(.secondary)
+                                        .lineSpacing(8)
                                 }
                             }
                         }
                     }
-                    .padding(.horizontal, 24)
+                    .padding(24)
                     .padding(.bottom, 32)
                 }
             }
+            .padding(.horizontal, 24)
         }
+        .sensoryFeedback(.selection, trigger: dismissTrigger)
     }
 }
 
@@ -119,7 +126,7 @@ struct RatioBarView: View {
                 }
             }
         }
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
 

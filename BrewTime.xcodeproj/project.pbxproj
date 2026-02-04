@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BT001 /* BrewTimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT101; };
-		BT002 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT102; };
-		BT003 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT103; };
-		BT004 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT104; };
-		BT005 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT105; };
-		BT006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BT106; };
-		BT007 /* DailyCupLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT107; };
-		BT008 /* CoffeeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT108; };
+		BT001 /* BrewTimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT101 /* BrewTimeApp.swift */; };
+		BT002 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT102 /* Theme.swift */; };
+		BT003 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT103 /* Models.swift */; };
+		BT004 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT104 /* HomeView.swift */; };
+		BT005 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT105 /* RecipeDetailView.swift */; };
+		BT006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BT106 /* Assets.xcassets */; };
+		BT007 /* DailyCupLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT107 /* DailyCupLog.swift */; };
+		BT008 /* CoffeeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = BT108 /* CoffeeRules.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,12 +43,12 @@
 		BT300 = {
 			isa = PBXGroup;
 			children = (
-				BT301 /* BrewTime */,
+				BT301,
 				BT302 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		BT301 /* BrewTime */ = {
+		BT301 = {
 			isa = PBXGroup;
 			children = (
 				BT106 /* Assets.xcassets */,
@@ -228,7 +228,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -284,7 +284,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -301,6 +301,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = JBGAD4XAK9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -329,6 +330,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = JBGAD4XAK9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
